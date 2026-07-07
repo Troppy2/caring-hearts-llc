@@ -1,9 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import { content, isPlaceholder } from "../content/content";
 import { SectionTitle, Placeholder } from "./primitives";
 
 const ENDPOINT = import.meta.env.VITE_CONTACT_FORM_ENDPOINT?.trim();
+
+// Basic anti-spam: one submission per minute, tracked in localStorage so a
+// page reload can't reset it. (Real abuse protection lives at the form backend.)
+const COOLDOWN_MS = 60_000;
+const COOLDOWN_KEY = "ch:lastInquiryAt";
+
+/** Seconds remaining before another message may be sent (0 = ready). */
+function cooldownRemaining(): number {
+  try {
+    const last = Number(localStorage.getItem(COOLDOWN_KEY) || 0);
+    const left = Math.ceil((last + COOLDOWN_MS - Date.now()) / 1000);
+    return left > 0 ? left : 0;
+  } catch {
+    return 0;
+  }
+}
 
 type FormState = { name: string; phone: string; email: string; message: string };
 type Status = "idle" | "sending" | "sent" | "error";
@@ -21,6 +37,14 @@ export default function Contact() {
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
+  const [cooldown, setCooldown] = useState<number>(() => cooldownRemaining());
+
+  // Tick the cooldown down once a second while it's active.
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const id = setInterval(() => setCooldown(cooldownRemaining()), 1000);
+    return () => clearInterval(id);
+  }, [cooldown]);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -33,12 +57,27 @@ export default function Contact() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+
+    // Rate limit: block if a message was sent within the last minute.
+    if (cooldownRemaining() > 0) {
+      setCooldown(cooldownRemaining());
+      return;
+    }
+
     const e = validate();
     if (Object.keys(e).length) {
       setErrors(e);
       return;
     }
     setErrors({});
+
+    // Count this attempt toward the one-per-minute limit.
+    try {
+      localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+    } catch {
+      /* localStorage unavailable — proceed without persistence */
+    }
+    setCooldown(Math.ceil(COOLDOWN_MS / 1000));
 
     // No endpoint configured → succeed locally and steer to phone/email.
     if (!ENDPOINT) {
@@ -236,24 +275,34 @@ export default function Contact() {
                   </p>
                 )}
 
+                {cooldown > 0 && (
+                  <p aria-live="polite" style={{ color: "var(--color-text-muted)", fontSize: 16, marginBottom: "0.75rem", textAlign: "center" }}>
+                    Thanks — you can send another message in {cooldown}s.
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  disabled={status === "sending"}
+                  disabled={status === "sending" || cooldown > 0}
                   style={{
                     width: "100%",
                     minHeight: 56,
-                    backgroundColor: "var(--color-primary)",
+                    backgroundColor: status === "sending" || cooldown > 0 ? "var(--color-border)" : "var(--color-primary)",
                     color: "#fff",
                     fontFamily: "var(--font-display)",
                     fontWeight: 800,
                     fontSize: 20,
                     border: "none",
                     borderRadius: "var(--radius-sm)",
-                    cursor: status === "sending" ? "wait" : "pointer",
+                    cursor: status === "sending" ? "wait" : cooldown > 0 ? "not-allowed" : "pointer",
                     boxShadow: "0 4px 16px rgba(46,125,50,0.3)",
                   }}
                 >
-                  {status === "sending" ? "Sending…" : "Send My Inquiry"}
+                  {status === "sending"
+                    ? "Sending…"
+                    : cooldown > 0
+                      ? `Please wait ${cooldown}s`
+                      : "Send My Inquiry"}
                 </button>
 
                 <p style={{ textAlign: "center", marginTop: "1rem", fontSize: 16, color: "var(--color-text-muted)" }}>
