@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import { content, isPlaceholder } from "../content/content";
 import { SectionTitle, Placeholder } from "./primitives";
 
-const ENDPOINT = import.meta.env.VITE_CONTACT_FORM_ENDPOINT?.trim();
+// Formspree form ID (public, non-secret identifier). Overridable per environment.
+const FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID?.trim() || "maqgkpdg";
 
 // Basic anti-spam: one submission per minute, tracked in localStorage so a
-// page reload can't reset it. (Real abuse protection lives at the form backend.)
+// page reload can't reset it. (Real abuse protection lives at Formspree.)
 const COOLDOWN_MS = 60_000;
 const COOLDOWN_KEY = "ch:lastInquiryAt";
 
@@ -22,7 +24,6 @@ function cooldownRemaining(): number {
 }
 
 type FormState = { name: string; phone: string; email: string; message: string };
-type Status = "idle" | "sending" | "sent" | "error";
 
 const FIELDS = [
   { id: "name", label: "Your Name", type: "text", placeholder: "Jane Smith", required: true },
@@ -34,9 +35,11 @@ export default function Contact() {
   const { phone, emails, address } = content.business;
   const c = content.contact;
 
+  // Formspree handles the actual network submission + spam filtering.
+  const [state, handleSubmit] = useForm(FORM_ID);
+
   const [form, setForm] = useState<FormState>({ name: "", phone: "", email: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [status, setStatus] = useState<Status>("idle");
   const [cooldown, setCooldown] = useState<number>(() => cooldownRemaining());
 
   // Tick the cooldown down once a second while it's active.
@@ -55,10 +58,10 @@ export default function Contact() {
     return e;
   };
 
-  const handleSubmit = async (ev: React.FormEvent) => {
+  // Run our own validation + rate limit, then hand off to Formspree.
+  const onSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    // Rate limit: block if a message was sent within the last minute.
     if (cooldownRemaining() > 0) {
       setCooldown(cooldownRemaining());
       return;
@@ -79,23 +82,7 @@ export default function Contact() {
     }
     setCooldown(Math.ceil(COOLDOWN_MS / 1000));
 
-    // No endpoint configured → succeed locally and steer to phone/email.
-    if (!ENDPOINT) {
-      setStatus("sent");
-      return;
-    }
-
-    setStatus("sending");
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      setStatus(res.ok ? "sent" : "error");
-    } catch {
-      setStatus("error");
-    }
+    handleSubmit(ev);
   };
 
   const cardBase: React.CSSProperties = {
@@ -124,6 +111,8 @@ export default function Contact() {
     border: `2px solid ${hasErr ? "var(--color-accent)" : "var(--color-border)"}`,
     borderRadius: "var(--radius-sm)",
   });
+
+  const submitDisabled = state.submitting || cooldown > 0;
 
   return (
     <section
@@ -198,7 +187,7 @@ export default function Contact() {
 
           {/* Inquiry form */}
           <div>
-            {status === "sent" ? (
+            {state.succeeded ? (
               <div style={{ ...cardBase, backgroundColor: "var(--color-primary-tint)", border: "2px solid var(--color-primary)", padding: "2.5rem", textAlign: "center" }}>
                 <Heart size={48} color="var(--color-accent)" aria-hidden="true" style={{ margin: "0 auto 1rem" }} />
                 <h3 style={{ fontWeight: 800, color: "var(--color-primary-dark)", fontSize: "var(--fs-h3)", marginBottom: "0.75rem" }}>
@@ -213,10 +202,21 @@ export default function Contact() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate style={{ ...cardBase, padding: "2rem" }} aria-label="Inquiry form">
+              <form onSubmit={onSubmit} noValidate style={{ ...cardBase, padding: "2rem" }} aria-label="Inquiry form">
                 <h3 style={{ fontWeight: 800, color: "var(--color-primary-dark)", fontSize: "var(--fs-h3)", marginBottom: "1.5rem" }}>
                   {c.formHeading}
                 </h3>
+
+                {/* Nicer notification subject + spam honeypot (hidden from users) */}
+                <input type="hidden" name="_subject" value="New inquiry from the Caring Heart website" />
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+                />
 
                 {FIELDS.map((f) => (
                   <div key={f.id} style={{ marginBottom: "1.25rem" }}>
@@ -226,6 +226,7 @@ export default function Contact() {
                     </label>
                     <input
                       id={f.id}
+                      name={f.id}
                       type={f.type}
                       placeholder={f.placeholder}
                       value={form[f.id]}
@@ -241,6 +242,7 @@ export default function Contact() {
                         {errors[f.id]}
                       </p>
                     )}
+                    <ValidationError field={f.id} errors={state.errors} className="fs-error" />
                   </div>
                 ))}
 
@@ -251,6 +253,7 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={4}
                     placeholder="We're looking for care for my mother, who…"
                     value={form.message}
@@ -266,9 +269,10 @@ export default function Contact() {
                       {errors.message}
                     </p>
                   )}
+                  <ValidationError field="message" errors={state.errors} className="fs-error" />
                 </div>
 
-                {status === "error" && (
+                {state.errors && (
                   <p role="alert" style={{ color: "var(--color-accent)", fontSize: 16, marginBottom: "1rem" }}>
                     Something went wrong sending your message. Please call us at{" "}
                     <a href={`tel:${phone}`} style={{ fontWeight: 700, color: "var(--color-accent)" }}>{phone}</a> instead.
@@ -283,22 +287,22 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={status === "sending" || cooldown > 0}
+                  disabled={submitDisabled}
                   style={{
                     width: "100%",
                     minHeight: 56,
-                    backgroundColor: status === "sending" || cooldown > 0 ? "var(--color-border)" : "var(--color-primary)",
+                    backgroundColor: submitDisabled ? "var(--color-border)" : "var(--color-primary)",
                     color: "#fff",
                     fontFamily: "var(--font-display)",
                     fontWeight: 800,
                     fontSize: 20,
                     border: "none",
                     borderRadius: "var(--radius-sm)",
-                    cursor: status === "sending" ? "wait" : cooldown > 0 ? "not-allowed" : "pointer",
+                    cursor: state.submitting ? "wait" : cooldown > 0 ? "not-allowed" : "pointer",
                     boxShadow: "0 4px 16px rgba(46,125,50,0.3)",
                   }}
                 >
-                  {status === "sending"
+                  {state.submitting
                     ? "Sending…"
                     : cooldown > 0
                       ? `Please wait ${cooldown}s`

@@ -39,11 +39,16 @@ requirements documents.
 
 ## Contact form
 
-The form works with no custom backend. Set `VITE_CONTACT_FORM_ENDPOINT` (see
-[`.env.example`](.env.example)) to a form-backend-as-a-service endpoint (Formspree,
-Web3Forms, etc.). With no endpoint set, the form still validates and confirms, then
-steers families to the phone/email — it is never a dead end. Secrets stay out of the
-bundle: only `VITE_`-prefixed vars are exposed, and `.env` is git-ignored.
+Submits via **Formspree** (form-backend-as-a-service) using `@formspree/react` — no
+custom backend or database. The form ID defaults to the project's Formspree form and
+can be overridden with `VITE_FORMSPREE_FORM_ID` (see [`.env.example`](.env.example));
+it's a public identifier, not a secret.
+
+On top of Formspree, the form adds: client-side validation (name required, email **or**
+phone required, message required), a **1-message-per-minute** rate limit (localStorage,
+survives reloads), a hidden honeypot (`_gotcha`) for spam, and a graceful error path
+that steers families to the phone number if submission fails. Manage notification
+recipients and spam rules in the Formspree dashboard.
 
 ## Deploy (Vercel)
 

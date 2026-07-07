@@ -109,6 +109,13 @@ ol {
   text-underline-offset: 3px;
 }
 
+/* Server-side (Formspree) field validation messages */
+.fs-error {
+  color: var(--color-accent);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
