@@ -182,17 +182,22 @@ export function LiftCard({
 
 // ─── Cradle divider ──────────────────────────────────────────────
 // Signature motif: a soft cupped-hands "cradle" curve between color
-// bands — echoing the logo's hands-holding-heart, per system design §4.
-// `cup` = bands dip toward the center (holding); flip for the mirror.
+// bands — echoing the logo's hands-holding-heart and the wavy banners in
+// the client's brochure (system design §4). A warm gold ribbon traces the
+// curve so the seams between sections carry the second brand hue.
 export function CradleDivider({
   topColor,
   bottomColor,
   flip = false,
+  ribbon = "var(--color-gold)",
 }: {
   topColor: string;
   bottomColor: string;
   flip?: boolean;
+  /** Highlight line hugging the curve; set to "none" to omit. */
+  ribbon?: string;
 }) {
+  const curve = "M0,18 C 380,18 470,70 720,70 C 970,70 1060,18 1440,18";
   return (
     <div style={{ backgroundColor: topColor, lineHeight: 0 }} aria-hidden="true">
       <svg
@@ -205,52 +210,93 @@ export function CradleDivider({
           transform: flip ? "scaleY(-1)" : undefined,
         }}
       >
-        {/* A single smooth cup: high at the edges, dipping gently at center */}
-        <path
-          d="M0,18 C 380,18 470,70 720,70 C 970,70 1060,18 1440,18 L1440,90 L0,90 Z"
-          fill={bottomColor}
-        />
+        {/* the lower band, cupped toward the center */}
+        <path d={`${curve} L1440,90 L0,90 Z`} fill={bottomColor} />
+        {/* gold ribbon tracing the seam */}
+        {ribbon !== "none" && (
+          <path
+            d={curve}
+            fill="none"
+            stroke={ribbon}
+            strokeWidth="5"
+            vectorEffect="non-scaling-stroke"
+            strokeLinecap="round"
+          />
+        )}
       </svg>
     </div>
   );
 }
 
+// ─── Section eyebrow ─────────────────────────────────────────────
+// Small gold (or cream, on green) kicker above a section title. Adds the
+// second brand hue and a bit of structure without numbered-list clutter.
+export function Eyebrow({
+  children,
+  onGreen = false,
+  align = "center",
+}: {
+  children: ReactNode;
+  onGreen?: boolean;
+  align?: "center" | "left";
+}) {
+  return (
+    <p
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: align === "center" ? "center" : "flex-start",
+        gap: 10,
+        margin: "0 0 0.6rem",
+        fontFamily: "var(--font-display)",
+        fontWeight: 800,
+        fontSize: 14,
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        color: onGreen ? "var(--color-gold-tint)" : "var(--color-gold-text)",
+      }}
+    >
+      <span aria-hidden="true" style={{ width: 22, height: 2, background: "currentColor", borderRadius: 2 }} />
+      {children}
+    </p>
+  );
+}
+
+// ─── Icon-chip accents ───────────────────────────────────────────
+// Rotating hue family so lists read lively but stay cohesive. On light
+// sections: solid brand-color chip + white icon. On green sections: warm
+// cream chip + colored icon (keeps icon/background contrast either way).
+const CHIP_ON_LIGHT = [
+  "var(--color-primary)",
+  "var(--color-terracotta)",
+  "var(--color-accent)",
+  "var(--color-gold-dark)",
+];
+const ICON_ON_CREAM = [
+  "var(--color-primary-dark)",
+  "var(--color-terracotta)",
+  "var(--color-accent)",
+  "var(--color-gold-text)",
+];
+
+export function chipTheme(i: number, onGreen = false) {
+  return onGreen
+    ? { bg: "var(--color-gold-tint)", icon: ICON_ON_CREAM[i % ICON_ON_CREAM.length] }
+    : { bg: CHIP_ON_LIGHT[i % CHIP_ON_LIGHT.length], icon: "#ffffff" };
+}
+
 // ─── Heart logo mark ─────────────────────────────────────────────
-// Two cupped hands cradling a heart, faithful to the client's logo.
-// Rendered on a soft cream disc so the brown hands read on the green hero.
+// The client's real logo (two hands cradling a heart), trimmed to a
+// transparent background so it sits directly on any brand color.
 export function HeartLogoMark({ size = 150 }: { size?: number }) {
   return (
-    <svg
-      viewBox="0 0 200 190"
+    <img
+      src="/logo-mark.png"
       width={size}
-      height={(size * 190) / 200}
-      role="img"
-      aria-label="Caring Heart logo — two hands cradling a heart"
-    >
-      {/* soft cream disc backdrop */}
-      <circle cx="100" cy="88" r="88" fill="#faf3e7" />
-      {/* heart */}
-      <path
-        d="M100 118 C58 88 34 66 34 43 C34 25 47 13 64 13 C78 13 90 22 100 35 C110 22 122 13 136 13 C153 13 166 25 166 43 C166 66 142 88 100 118 Z"
-        fill="#e02424"
-      />
-      {/* left hand */}
-      <path
-        d="M96 168 C70 168 44 156 30 132 C22 118 20 104 24 96 C28 89 36 90 40 98 C46 110 56 120 70 126 C58 112 50 100 48 88 C47 80 55 77 60 84 C68 96 80 110 96 118 Z"
-        fill="#8a5a2b"
-        stroke="#5c3a17"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      {/* right hand (mirror) */}
-      <path
-        d="M104 168 C130 168 156 156 170 132 C178 118 180 104 176 96 C172 89 164 90 160 98 C154 110 144 120 130 126 C142 112 150 100 152 88 C153 80 145 77 140 84 C132 96 120 110 104 118 Z"
-        fill="#8a5a2b"
-        stroke="#5c3a17"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-    </svg>
+      height={Math.round((size * 293) / 372)}
+      alt="Caring Heart logo — two hands cradling a heart"
+      style={{ display: "block", height: "auto" }}
+    />
   );
 }
 
@@ -265,7 +311,7 @@ export function Section({
   style = {},
 }: {
   id?: string;
-  bg: "cream" | "white" | "green" | "green-dark";
+  bg: "cream" | "white" | "green" | "green-dark" | "blush" | "gold";
   labelledBy?: string;
   children: ReactNode;
   narrow?: boolean;
@@ -277,6 +323,8 @@ export function Section({
     white: "var(--color-bg-alt)",
     green: "var(--color-primary)",
     "green-dark": "var(--color-primary-dark)",
+    blush: "var(--color-bg-blush)",
+    gold: "var(--color-gold-tint)",
   };
   const onGreen = bg === "green" || bg === "green-dark";
   return (

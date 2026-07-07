@@ -7,18 +7,31 @@
 
 :root {
   /* Brand green (from the client's logo + brochure) */
-  --color-primary: #2e7d32;       /* forest green, ~4.6:1 on white */
+  --color-primary: #2e7d32;       /* forest green, white text ~5.1:1 */
   --color-primary-dark: #1b5e20;  /* headers, deep bands */
+  --color-primary-bright: #43a047;/* decorative highlights / ribbon edge only */
   --color-primary-tint: #eaf2ea;  /* pale green card fill on cream */
 
-  /* Heart red — accent only (CTAs / highlights), never a large field */
+  /* Marigold gold — second brand hue, drawn from the logo's warm cream/brown.
+     Adds color without fighting the green. `-text` verified ≥4.7:1 on light. */
+  --color-gold: #e39a2b;          /* decorative fills, ribbon edge */
+  --color-gold-dark: #c77d0f;     /* icon chips (white icon, graphic 3:1) */
+  --color-gold-text: #9a5a08;     /* eyebrows / small text on cream & blush */
+  --color-gold-tint: #fbf1db;     /* pale gold band + chip fill on green */
+
+  /* Heart red — accent (CTAs / highlights), never a large field */
   --color-accent: #c62828;
   --color-accent-soft: #ef9a9a;
 
+  /* Terracotta — third rotating accent for icon chips */
+  --color-terracotta: #c15a2e;
+
   /* Warm neutrals (cream matches the brochure background) */
   --color-bg: #faf3e7;
+  --color-bg-blush: #fbebdd;      /* warm peach band, alternates with cream */
   --color-bg-alt: #ffffff;
   --color-border: #c8b99c;
+  --color-border-gold: #e6cfa0;   /* warm hairline for cards on light */
 
   /* Text */
   --color-text: #1a1a1a;          /* body on cream/white — high contrast */

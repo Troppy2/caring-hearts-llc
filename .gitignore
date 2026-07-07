@@ -49,3 +49,7 @@ coverage/
 # docs
 docs/
 .env
+
+# Claude
+.claude/
+

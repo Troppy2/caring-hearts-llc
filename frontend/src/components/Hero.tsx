@@ -11,7 +11,12 @@ export default function Hero() {
       id="hero"
       aria-label="Welcome to Caring Heart Assisted Living"
       className="on-green"
-      style={{ backgroundColor: "var(--color-primary)", paddingTop: 64 }}
+      style={{
+        /* warm green gradient + a soft gold glow, richer than a flat field */
+        background:
+          "radial-gradient(120% 80% at 50% 0%, #3a9440 0%, var(--color-primary) 42%, var(--color-primary-dark) 100%)",
+        paddingTop: 64,
+      }}
     >
       <div
         className="container"
@@ -23,7 +28,20 @@ export default function Hero() {
           padding: "3.5rem 1.25rem 1rem",
         }}
       >
-        <HeartLogoMark size={156} />
+        {/* Real logo mark on a soft cream halo so the brown hands read on green */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1.5rem 1.75rem",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at 50% 46%, rgba(250,243,231,0.96) 0%, rgba(250,243,231,0.9) 55%, rgba(250,243,231,0) 72%)",
+          }}
+        >
+          <HeartLogoMark size={188} />
+        </div>
 
         <h1
           style={{
@@ -39,12 +57,17 @@ export default function Hero() {
         </h1>
         <p
           style={{
-            color: "var(--color-on-green-dim)",
+            display: "inline-block",
+            marginTop: "0.85rem",
+            padding: "0.45rem 1.15rem",
+            borderRadius: 999,
+            background: "var(--color-gold)",
+            color: "#3a2606",
             fontFamily: "var(--font-display)",
-            fontWeight: 700,
-            fontSize: 20,
-            letterSpacing: "0.04em",
-            marginTop: "0.5rem",
+            fontWeight: 800,
+            fontSize: 16,
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
           }}
         >
           {kicker}

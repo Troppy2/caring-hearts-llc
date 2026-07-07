@@ -4,7 +4,7 @@
   "business": {
     "name": "Caring Heart Assisted Living",
     "shortName": "Caring Heart",
-    "established": 2003,
+    "established": 2025,
     "phone": "952-999-0771",
     "emails": ["CaringheartALF@outlook.com", "Seray.lansana25@gmail.com"],
     "address": {
@@ -16,10 +16,10 @@
 
   "hero": {
     "headline": "Caring Heart Assisted Living",
-    "kicker": "Established in 2003",
-    "photo": null,
-    "photoCaption": null,
-    "ctaNote": null
+    "kicker": "Established in 2025",
+    "photo": "/home-exterior.webp",
+    "photoCaption": "The Caring Heart home exterior",
+    "ctaNote": "Call or email us to learn more about care and visiting hours"
   },
 
   "mission": {
@@ -30,39 +30,38 @@
 
   "services": {
     "heading": "Our Services",
-    "intro": null,
+    "intro": "Personalized support, meals, transportation, and daily care for each resident.",
     "items": [
-      { "icon": "Home", "label": "Private rooms", "desc": null },
-      { "icon": "Utensils", "label": "Three-course meals daily", "desc": null },
-      { "icon": "Heart", "label": "Respite and hospice care", "desc": null },
-      { "icon": "Activity", "label": "Assistance for ambulatory and non-ambulatory clients", "desc": null },
-      { "icon": "Truck", "label": "Transportation to medical appointments", "desc": null },
-      { "icon": "Leaf", "label": "Housekeeping and laundry", "desc": null },
-      { "icon": "Clock", "label": "24/7 medical staff on-site", "desc": null },
-      { "icon": "Users", "label": "Engaging, personalized activities", "desc": null }
+      { "icon": "Home", "label": "Private rooms", "desc": "Private rooms for resident comfort and privacy." },
+      { "icon": "Utensils", "label": "Three-course meals daily", "desc": "Three-course meals served each day." },
+      { "icon": "Truck", "label": "Transportation to medical appointments", "desc": "Transportation to medical appointments." },
+      { "icon": "Leaf", "label": "Housekeeping and laundry", "desc": "Housekeeping and laundry services." },
+      { "icon": "Clock", "label": "24/7 medical staff on-site", "desc": "Medical staff on-site 24/7." },
+      { "icon": "Users", "label": "Engaging, personalized activities", "desc": "Engaging, personalized activities for residents." }
     ]
   },
 
   "facilities": {
     "heading": "Facilities & Amenities",
-    "intro": null,
+    "intro": "A small home with shared spaces, technology access, and safety features for up to 5 residents.",
     "items": [
-      { "icon": "Home", "label": "Capacity for 5 residents", "desc": null },
-      { "icon": "Leaf", "label": "Garden, common lounge, and activity room", "desc": null },
-      { "icon": "Wifi", "label": "Wi-Fi, TV, and technology access", "desc": null },
-      { "icon": "Shield", "label": "Fire alarms, emergency exits, and storm shelter in the basement", "desc": null }
+      { "icon": "Home", "label": "Capacity for 5 residents", "desc": "Comfortable capacity for up to 5 residents." },
+      { "icon": "Leaf", "label": "Garden, common lounge, and activity room", "desc": "Garden, common lounge, and activity room available." },
+      { "icon": "Wifi", "label": "Wi-Fi, TV, and technology access", "desc": "Wi-Fi, TV, and technology access in the home." },
+      { "icon": "Shield", "label": "Fire alarms, emergency exits, and storm shelter in the basement", "desc": "Fire alarms, emergency exits, and a storm shelter in the basement." }
     ]
   },
 
   "gallery": {
     "heading": "Our Home",
-    "intro": null,
+    "intro": "A look inside the home and the exterior of the property.",
     "photos": [
-      { "url": null, "alt": "Untitled photo" },
-      { "url": null, "alt": "Untitled photo" },
-      { "url": null, "alt": "Untitled photo" },
-      { "url": null, "alt": "Untitled photo" },
-      { "url": null, "alt": "Untitled photo" }
+      { "url": "/resident-christine.jpeg", "alt": "Resident Christine at Caring Heart Assisted Living" },
+      { "url": "/home-exterior.webp", "alt": "Caring Heart Assisted Living home exterior" },
+      { "url": "/brochure-dining-room.jpeg", "alt": "Dining room at Caring Heart Assisted Living" },
+      { "url": "/brochure-living-room.jpeg", "alt": "Living room at Caring Heart Assisted Living" },
+      { "url": "/brochure-kitchen.jpeg", "alt": "Kitchen at Caring Heart Assisted Living" },
+      { "url": "/brochure-bedroom.jpeg", "alt": "Bedroom at Caring Heart Assisted Living" }
     ]
   },
 
@@ -71,25 +70,23 @@
     "name": "Seray Lansana",
     "title": "Founder & Compassionate Nurse",
     "quote": "With over 15 years of experience in nursing homes, I found joy and fulfillment in providing care to elderly clients. Witnessing the appreciation from my patients and knowing I made a difference in their lives inspired me to open Caring Heart Assisted Living. I am a compassionate nurse, dedicated to delivering holistic, heartfelt care.",
-    "photo": null,
+    "photo": "/founder.png",
     "photoAlt": "Seray Lansana, Founder of Caring Heart Assisted Living"
   },
 
   "staffSafety": {
     "heading": "Our Staff & Safety",
-    "intro": null,
+    "intro": "A 5:2 resident-to-staff ratio with trained caregivers available 24/7.",
     "items": [
       "5:2 resident-to-staff ratio",
       "Trained caregivers available 24/7",
-      "CPR certified",
-      "Background-checked staff",
       "Equipped to handle emergency situations"
     ]
   },
 
   "dayInLife": {
     "heading": "A Day in the Life",
-    "intro": null,
+    "intro": "Residents receive help with daily activities, time outdoors, music, and meals as needed.",
     "items": [
       { "icon": "Heart", "label": "Assistance with daily activities" },
       { "icon": "Leaf", "label": "Time outdoors in our garden" },
@@ -109,7 +106,7 @@
 
   "contact": {
     "heading": "Get in Touch",
-    "intro": null,
+    "intro": "Call, email, or visit during daily hours to learn more.",
     "directHeading": "Contact Us Directly",
     "formHeading": "Send Us a Message"
   }

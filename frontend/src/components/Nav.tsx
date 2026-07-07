@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Phone, Menu, X, Heart } from "lucide-react";
+import { Phone, Menu, X } from "lucide-react";
 import { content } from "../content/content";
 
 const LINKS = [
@@ -51,7 +51,7 @@ export default function Nav() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 10,
             color: "#fff",
             fontWeight: 800,
             fontSize: 20,
@@ -59,7 +59,7 @@ export default function Nav() {
             minHeight: 44,
           }}
         >
-          <Heart size={22} fill="#ef9a9a" color="#ef9a9a" aria-hidden="true" />
+          <img src="/logo-mark.png" alt="" aria-hidden="true" style={{ width: 26, height: 26, display: "block" }} />
           <span>{shortName}</span>
         </a>
 

@@ -5,10 +5,12 @@ import {
   Section,
   SectionTitle,
   SectionIntro,
+  Eyebrow,
   Reveal,
   LiftCard,
   CradleDivider,
   ICONS,
+  chipTheme,
   Placeholder,
   PhotoPlaceholder,
 } from "./primitives";
@@ -24,6 +26,7 @@ export function Mission() {
   return (
     <Section id="about" bg="cream" labelledBy="mission-heading" narrow>
       <Reveal>
+        <Eyebrow>About Us</Eyebrow>
         <SectionTitle id="mission-heading">Our Mission</SectionTitle>
         <p style={{ textAlign: "center", fontSize: 20, lineHeight: 1.65, maxWidth: "44rem", margin: "0 auto 3rem" }}>
           {m.statement}
@@ -56,6 +59,7 @@ export function Services() {
     <>
       <CradleDivider topColor="var(--color-bg)" bottomColor="var(--color-primary)" />
       <Section id="services" bg="green" labelledBy="services-heading">
+        <Eyebrow onGreen>What We Offer</Eyebrow>
         <SectionTitle id="services-heading" onGreen>
           {s.heading}
         </SectionTitle>
@@ -84,11 +88,11 @@ export function Services() {
                       width: 44,
                       height: 44,
                       borderRadius: "var(--radius-sm)",
-                      backgroundColor: "var(--color-accent)",
+                      backgroundColor: chipTheme(i, true).bg,
                       flexShrink: 0,
                     }}
                   >
-                    <Icon size={22} color="#fff" aria-hidden={true} />
+                    <Icon size={22} color={chipTheme(i, true).icon} aria-hidden={true} />
                   </span>
                   <h3 style={{ color: "#fff", fontWeight: 700, fontSize: 19 }}>{item.label}</h3>
                 </div>
@@ -109,7 +113,8 @@ export function Services() {
 export function Facilities() {
   const f = content.facilities;
   return (
-    <Section bg="cream" labelledBy="facilities-heading">
+    <Section bg="blush" labelledBy="facilities-heading">
+      <Eyebrow>Home Features</Eyebrow>
       <SectionTitle id="facilities-heading">{f.heading}</SectionTitle>
       <Intro text={f.intro} />
 
@@ -138,11 +143,11 @@ export function Facilities() {
                   width: 48,
                   height: 48,
                   borderRadius: "var(--radius-sm)",
-                  backgroundColor: "var(--color-primary-tint)",
+                  backgroundColor: chipTheme(i).bg,
                   flexShrink: 0,
                 }}
               >
-                <Icon size={24} color="var(--color-primary)" aria-hidden={true} />
+                <Icon size={24} color={chipTheme(i).icon} aria-hidden={true} />
               </span>
               <div>
                 <h3 style={{ fontWeight: 700, color: "var(--color-primary-dark)", fontSize: 19, marginBottom: 4 }}>
@@ -164,8 +169,9 @@ export function Facilities() {
 export function Owner() {
   const o = content.owner;
   return (
-    <Section bg="cream" labelledBy="owner-heading" narrow>
+    <Section bg="gold" labelledBy="owner-heading" narrow>
       <div style={{ marginBottom: "2.5rem" }}>
+        <Eyebrow>Leadership</Eyebrow>
         <SectionTitle id="owner-heading">{o.heading}</SectionTitle>
       </div>
 
@@ -220,6 +226,7 @@ export function StaffSafety() {
     <>
       <CradleDivider topColor="var(--color-bg)" bottomColor="var(--color-primary)" />
       <Section bg="green" labelledBy="safety-heading" narrow>
+        <Eyebrow onGreen>Care & Safety</Eyebrow>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
           <Shield size={32} color="#fff" aria-hidden="true" />
           <SectionTitle id="safety-heading" onGreen>
@@ -259,7 +266,8 @@ export function StaffSafety() {
 export function DayInLife() {
   const d = content.dayInLife;
   return (
-    <Section bg="cream" labelledBy="day-heading" narrow>
+    <Section bg="gold" labelledBy="day-heading" narrow>
+      <Eyebrow>Everyday Life</Eyebrow>
       <SectionTitle id="day-heading">{d.heading}</SectionTitle>
       <Intro text={d.intro} />
 
@@ -288,11 +296,11 @@ export function DayInLife() {
                   width: 44,
                   height: 44,
                   borderRadius: "50%",
-                  backgroundColor: "var(--color-primary-tint)",
+                  backgroundColor: chipTheme(i).bg,
                   flexShrink: 0,
                 }}
               >
-                <Icon size={22} color="var(--color-primary)" aria-hidden={true} />
+                <Icon size={22} color={chipTheme(i).icon} aria-hidden={true} />
               </span>
               <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18 }}>{item.label}</span>
             </LiftCard>
@@ -310,6 +318,7 @@ export function Community() {
     <>
       <CradleDivider topColor="var(--color-bg)" bottomColor="var(--color-primary-dark)" />
       <Section bg="green-dark" labelledBy="community-heading">
+        <Eyebrow onGreen>Life Together</Eyebrow>
         <div style={{ marginBottom: "2.5rem" }}>
           <SectionTitle id="community-heading" onGreen>
             {co.heading}
