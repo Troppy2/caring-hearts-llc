@@ -1,0 +1,116 @@
+{
+  "_readme": "Single source of truth for all site content. Fields set to null are PLACEHOLDERS — they are not stated in the client's app-requirements documents (brochure + business card) and render as a visible 'Untitled' marker in the UI. Fill them in with real, client-confirmed content before launch. Do NOT invent copy here.",
+
+  "business": {
+    "name": "Caring Heart Assisted Living",
+    "shortName": "Caring Heart",
+    "established": 2003,
+    "phone": "952-999-0771",
+    "emails": ["CaringheartALF@outlook.com", "Seray.lansana25@gmail.com"],
+    "address": {
+      "line1": "13223 Yukon Street NW",
+      "line2": "Coon Rapids, MN 55448"
+    },
+    "visitingHours": "Daily, 8:00 am – 8:00 pm"
+  },
+
+  "hero": {
+    "headline": "Caring Heart Assisted Living",
+    "kicker": "Established in 2003",
+    "photo": null,
+    "photoCaption": null,
+    "ctaNote": null
+  },
+
+  "mission": {
+    "statement": "To provide a safe, nurturing, and home-like environment where elderly clients over 55 can thrive. We offer personalized care plans tailored to physical, emotional, social, and spiritual needs, ensuring every resident feels respected, supported, and genuinely at home.",
+    "differentiatorsHeading": "What Makes Us Different",
+    "differentiatorsBody": "Unlike traditional facilities, we focus on creating a family-like environment with one-on-one care. Our experienced staff (10+ years) provide customized care plans, meaningful daily activities, and work closely with families to support the best outcomes for each resident. We ensure residents receive care with dignity, empathy, and professionalism."
+  },
+
+  "services": {
+    "heading": "Our Services",
+    "intro": null,
+    "items": [
+      { "icon": "Home", "label": "Private rooms", "desc": null },
+      { "icon": "Utensils", "label": "Three-course meals daily", "desc": null },
+      { "icon": "Heart", "label": "Respite and hospice care", "desc": null },
+      { "icon": "Activity", "label": "Assistance for ambulatory and non-ambulatory clients", "desc": null },
+      { "icon": "Truck", "label": "Transportation to medical appointments", "desc": null },
+      { "icon": "Leaf", "label": "Housekeeping and laundry", "desc": null },
+      { "icon": "Clock", "label": "24/7 medical staff on-site", "desc": null },
+      { "icon": "Users", "label": "Engaging, personalized activities", "desc": null }
+    ]
+  },
+
+  "facilities": {
+    "heading": "Facilities & Amenities",
+    "intro": null,
+    "items": [
+      { "icon": "Home", "label": "Capacity for 5 residents", "desc": null },
+      { "icon": "Leaf", "label": "Garden, common lounge, and activity room", "desc": null },
+      { "icon": "Wifi", "label": "Wi-Fi, TV, and technology access", "desc": null },
+      { "icon": "Shield", "label": "Fire alarms, emergency exits, and storm shelter in the basement", "desc": null }
+    ]
+  },
+
+  "gallery": {
+    "heading": "Our Home",
+    "intro": null,
+    "photos": [
+      { "url": null, "alt": "Untitled photo" },
+      { "url": null, "alt": "Untitled photo" },
+      { "url": null, "alt": "Untitled photo" },
+      { "url": null, "alt": "Untitled photo" },
+      { "url": null, "alt": "Untitled photo" }
+    ]
+  },
+
+  "owner": {
+    "heading": "Meet the Founder",
+    "name": "Seray Lansana",
+    "title": "Founder & Compassionate Nurse",
+    "quote": "With over 15 years of experience in nursing homes, I found joy and fulfillment in providing care to elderly clients. Witnessing the appreciation from my patients and knowing I made a difference in their lives inspired me to open Caring Heart Assisted Living. I am a compassionate nurse, dedicated to delivering holistic, heartfelt care.",
+    "photo": null,
+    "photoAlt": "Seray Lansana, Founder of Caring Heart Assisted Living"
+  },
+
+  "staffSafety": {
+    "heading": "Our Staff & Safety",
+    "intro": null,
+    "items": [
+      "5:2 resident-to-staff ratio",
+      "Trained caregivers available 24/7",
+      "CPR certified",
+      "Background-checked staff",
+      "Equipped to handle emergency situations"
+    ]
+  },
+
+  "dayInLife": {
+    "heading": "A Day in the Life",
+    "intro": null,
+    "items": [
+      { "icon": "Heart", "label": "Assistance with daily activities" },
+      { "icon": "Leaf", "label": "Time outdoors in our garden" },
+      { "icon": "Activity", "label": "Therapeutic music sessions" },
+      { "icon": "Utensils", "label": "All meals and personal care, as needed" }
+    ]
+  },
+
+  "community": {
+    "heading": "Community and Culture",
+    "cards": [
+      { "title": "Holidays & Celebrations", "body": "We celebrate holidays, birthdays, and Thanksgiving with residents and their families." },
+      { "title": "Spiritual & Cultural Respect", "body": "Spiritual, religious, and cultural needs are honored daily." },
+      { "title": "Visiting Hours", "body": "Visitors are welcome from 8:00 am to 8:00 pm." }
+    ]
+  },
+
+  "contact": {
+    "heading": "Get in Touch",
+    "intro": null,
+    "directHeading": "Contact Us Directly",
+    "formHeading": "Send Us a Message"
+  }
+}

@@ -1,0 +1,57 @@
+/* ─── Design tokens ──────────────────────────────────────────────
+   Single source of truth for color, type, and spacing.
+   Values pinned to the system design doc §3 (non-negotiable minimums).
+   Every text/background pair here is verified ≥ 4.5:1 (WCAG AA),
+   body copy targets ~7:1 (AAA) for the senior audience.
+   ---------------------------------------------------------------- */
+
+:root {
+  /* Brand green (from the client's logo + brochure) */
+  --color-primary: #2e7d32;       /* forest green, ~4.6:1 on white */
+  --color-primary-dark: #1b5e20;  /* headers, deep bands */
+  --color-primary-tint: #eaf2ea;  /* pale green card fill on cream */
+
+  /* Heart red — accent only (CTAs / highlights), never a large field */
+  --color-accent: #c62828;
+  --color-accent-soft: #ef9a9a;
+
+  /* Warm neutrals (cream matches the brochure background) */
+  --color-bg: #faf3e7;
+  --color-bg-alt: #ffffff;
+  --color-border: #c8b99c;
+
+  /* Text */
+  --color-text: #1a1a1a;          /* body on cream/white — high contrast */
+  --color-text-muted: #5c4a2a;    /* warm brown on cream, still ≥ 7:1 */
+
+  /* Text sitting on green fields */
+  --color-on-green: #eaf6ea;      /* body text on green */
+  --color-on-green-dim: #c8e6c9;  /* secondary text on green */
+
+  /* Typography */
+  --font-display: "Nunito", ui-rounded, "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Source Sans 3", system-ui, sans-serif;
+
+  /* Type scale — 40/32/24/20/18, body floor 18px (design doc §3) */
+  --fs-display: clamp(2rem, 6vw, 3.5rem);  /* hero */
+  --fs-h2: clamp(1.75rem, 4vw, 2.5rem);    /* section titles */
+  --fs-h3: 1.375rem;                        /* card titles ~22px */
+  --fs-lead: 1.1875rem;                     /* intros ~19px */
+  --fs-body: 1.125rem;                      /* body floor 18px */
+  --fs-sm: 1rem;                            /* captions 16px min */
+  --lh-body: 1.6;
+
+  /* Layout */
+  --maxw: 72rem;      /* ~1152px */
+  --maxw-narrow: 48rem;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --space-section: clamp(3.5rem, 8vw, 5rem);
+
+  /* Elevation */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-lift: 0 16px 40px rgba(0, 0, 0, 0.16);
+
+  /* Tap target floor (Apple HIG) */
+  --tap: 48px;
+}
