@@ -47,8 +47,13 @@ bundle: only `VITE_`-prefixed vars are exposed, and `.env` is git-ignored.
 
 ## Deploy (Vercel)
 
-Infra is committed at the repo root in [`../vercel.json`](../vercel.json) — it points
-Vercel at this `frontend/` subdirectory (Vite framework, `frontend/dist` output). Add
-`VITE_CONTACT_FORM_ENDPOINT` in the Vercel project's Environment Variables if you wire
-up the form. CI (type-check + build) runs on every push/PR via
+**The Vercel project's Root Directory must be `frontend`.** Vercel reads config relative
+to the Root Directory, so the deploy config lives here in
+[`vercel.json`](vercel.json) (Vite framework, `npm run build` → `dist`, `cleanUrls`,
+asset caching) — not at the repo root.
+
+- Import the repo, set **Root Directory = `frontend`**.
+- Add `VITE_CONTACT_FORM_ENDPOINT` under Environment Variables if you wire up the form.
+
+CI (type-check + build) runs on every push/PR via
 [`../.github/workflows/ci.yml`](../.github/workflows/ci.yml).
