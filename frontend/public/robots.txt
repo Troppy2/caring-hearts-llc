@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://caringhearts.vercel.app/sitemap.xml
